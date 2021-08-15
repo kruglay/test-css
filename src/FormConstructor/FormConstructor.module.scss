@@ -1,0 +1,65 @@
+@import "~styles/config/mixins"; // дикие относительные пути в импортах это минус
+
+.formContainer {
+  // Располагаем форму и блок с кнопкой «Закрыть»
+  display: grid;
+  grid-template-rows: 1fr min-content;
+  gap: 16px;
+  height: 100%;
+  // Ограничиваем размер формы на очень широких экранах.
+  // Грамотнее это сделать на уровне модального окна, но антд в этом плане не очень удобен.
+  max-width: 900px;
+  // Располагаем форму в центре по горизонтали, если модальное окно шире формы
+  margin: 0 auto;
+}
+
+.form {
+  // Двухколоночная форма
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  // Зазор между колонками имеет адаптивную ширину, чтобы подписи всегда были
+  // ближе к своему полю, чем к полю из соседней колонки.
+  // Зазор между подписью и полем тоже адаптивный (строка 26), это уже особенность грида
+  gap: min(8vw, 200px);
+}
+
+.formItem {
+  display: grid;
+  // Выравнивание подписи и элемента формы.
+  // Конкретная пропорция 2/5 не важна, нужно лишь соблюдение одинаковой сетки
+  // у всех FormItem-ов
+  grid-template-columns: 2fr 5fr;
+
+  :global {
+    // Подпись
+    .ant-form-item-label > label {
+      @include word-wrap;
+      color: var(--text-light);
+      font-weight: 500;
+    }
+
+    // Выравниваниваем подпись и текст в поле формы по верхней границе
+    // По сути мелочь
+    .ant-form-item-label > label,
+    .ant-form-item-control-input {
+      height: auto;
+      min-height: auto;
+    }
+
+    // Полоска под полем формы, должна быть шириной во всё поле
+    .ant-form-item-control-input-content {
+      border-bottom: 1px solid var(--secondary);
+    }
+  }
+}
+
+// Размеры шрифтов у подписи и у поля формы разные
+.formValue {
+  font-size: var(--font-size-large);
+}
+
+.formFooter {
+  margin-top: auto;
+  display: flex;
+
+}
